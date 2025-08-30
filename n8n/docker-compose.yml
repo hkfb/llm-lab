@@ -1,0 +1,64 @@
+x-n8n-base: &n8n-base
+  hostname: ${nhostname:-n8n}
+  container_name: ${nhostname:-n8n}
+  restart: ${restart:-unless-stopped}
+  environment:
+    - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE:-false}
+    - DB_TYPE=${DB_TYPE:-postgresdb}
+    - DB_POSTGRESDB_HOST=${DATABASE_HOST:-postgres-ai}
+    - DB_POSTGRESDB_PORT=${POSTGRESDB_PORT:-5432}
+    - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-lab}
+    - DB_POSTGRESDB_USER=${POSTGRES_USER:-user}
+    - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+    - N8N_PAYLOAD_SIZE_MAX=${N8N_PAYLOAD_SIZE_MAX:-32}
+    - N8N_FORMDATA_FILE_SIZE_MAX=${N8N_FORMDATA_FILE_SIZE_MAX:-400}
+    - GENERIC_TIMEZONE=${TIMEZONE:-Europe/Berlin}
+    - TZ=${TIMEZONE:-Europe/Berlin}
+    - QUEUE_BULL_PREFIX=${N8N_QUEUE_NAME:-n8n}
+    - QUEUE_BULL_REDIS_HOST=${N8N_QUEUE_HOST:-redis-ai}
+    - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+    - N8N_BASIC_AUTH_ACTIVE=${BASIC_AUTH_ACTIVE:-false}
+    - N8N_BASIC_AUTH_USER=${BASIC_AUTH_USER:-admin}
+    - N8N_BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+  ports:
+    - ${N8N_PORT:-5678}:5678
+  volumes:
+    - n8n_data:/home/node/.n8n
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  deploy:
+    mode: global
+    restart_policy:
+      condition: on-failure
+      delay: 5s
+      max_attempts: 3
+      window: 120s
+  healthcheck:
+    test: ["CMD", "sh", "-c", "(wget -q -T 5 -O - http://127.0.0.1:5678/healthz 2>/dev/null | grep -qF '{\"status\":\"ok\"}') || exit 1"]
+    start_period: 1m00s
+    interval: 5s
+    timeout: 10s
+    retries: 10
+  depends_on:
+    postgres-all:
+      condition: service_healthy
+      restart: true
+    redis-all:
+      condition: service_healthy
+      restart: true
+  networks:
+    - llm-lab
+
+services:
+    n8n:
+      <<: *n8n-base
+      image: n8nio/n8n:latest
+
+    n8n-uv:
+      <<: *n8n-base
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+
+volumes:
+  n8n_data:

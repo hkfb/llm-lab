@@ -15,4 +15,3 @@ pgadmin_data/*
 postgres/*
 qdrant/*
 redis/*
-n8n/
