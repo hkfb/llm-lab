@@ -46,8 +46,6 @@ x-n8n-base: &n8n-base
     redis:
       condition: service_healthy
       restart: true
-  networks:
-    - llm-lab
 
 services:
     n8n:

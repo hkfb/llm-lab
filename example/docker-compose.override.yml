@@ -6,3 +6,10 @@ services:
   n8n:
     depends_on: !reset []
 
+# Assign a custom subnet to the default network
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.26.0.0/24
+

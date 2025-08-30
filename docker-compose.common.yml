@@ -1,4 +1,5 @@
 networks:
-  llm-lab:
+  default:
+    name: llm-lab
     driver: bridge
 
