@@ -4,14 +4,10 @@ ollama
 flowise
 openwebui
 chroma
-postgres
-redis
 qdrant
 broker
 openhands-state
 .env
 openwebui/*
 pgadmin_data/*
-postgres/*
 qdrant/*
-redis/*

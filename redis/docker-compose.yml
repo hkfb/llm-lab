@@ -1,0 +1,22 @@
+services:
+    redis:
+      image: redis:latest
+      hostname: ${rhostname}
+      container_name: ${rhostname}
+      pull_policy: ${pull_policy:-missing}
+      restart: ${restart}
+      environment:
+        - REDIS_PORT=${REDIS_PORT}
+        - REDIS_DATABASES=16
+      volumes:
+        - ./redis:/data
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      healthcheck:
+        test: ["CMD", "redis-cli","ping"]
+        start_period: 5s
+        interval: 1s
+        timeout: 3s
+        retries: 5
+
+

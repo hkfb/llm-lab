@@ -1,0 +1,8 @@
+# This file is used to override settings in docker-compose.yml. The file must be
+# present in the same directory as docker-compose.yml in order to take effect.
+
+# Use host Postgres and Redis instances for n8n
+services:
+  n8n:
+    depends_on: !reset []
+

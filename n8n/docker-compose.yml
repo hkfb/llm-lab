@@ -40,10 +40,10 @@ x-n8n-base: &n8n-base
     timeout: 10s
     retries: 10
   depends_on:
-    postgres-all:
+    postgres:
       condition: service_healthy
       restart: true
-    redis-all:
+    redis:
       condition: service_healthy
       restart: true
   networks:
