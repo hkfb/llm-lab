@@ -3,7 +3,6 @@ whisper
 ollama
 flowise
 openwebui
-n8n
 chroma
 postgres
 redis
@@ -11,7 +10,6 @@ qdrant
 broker
 openhands-state
 .env
-n8n/*
 openwebui/*
 pgadmin_data/*
 postgres/*

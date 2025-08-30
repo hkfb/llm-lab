@@ -1,0 +1,4 @@
+networks:
+  llm-lab:
+    driver: bridge
+
