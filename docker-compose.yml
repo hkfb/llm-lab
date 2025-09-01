@@ -315,11 +315,8 @@ services:
 
     openwebui-all:
       <<: *openwebui-base
-      profiles: ["openwebui"]
-      links:
-        - redis-all
       depends_on:
-        redis-all:
+        redis:
           condition: service_healthy
           restart: true
 
@@ -403,13 +400,10 @@ services:
 
     evolutionapi:
       <<: *evolution-base
-      profiles: [ "evolutionapi" ]
-      links:
-        - redis-all
       depends_on:
-        postgres-all:
+        postgres:
           condition: service_healthy
           restart: true
-        redis-all:
+        redis:
           condition: service_healthy
           restart: true
