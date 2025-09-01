@@ -8,11 +8,11 @@ include:
 
 x-ollama-base: &ollama-base
     image: ollama/ollama:latest
-    hostname: ${ohostname}
-    container_name: ${ohostname}
+    hostname: ${ohostname:-ollama}
+    container_name: ${ohostname:-ollama}
     privileged: true
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     tty: true
     ports:
       - ${OPORT:-11434}:11434
@@ -103,10 +103,10 @@ x-openwebui-base: &openwebui-base
 
 x-qdrant-base: &qdrant-base
     image: qdrant/qdrant
-    hostname: ${qhostname}
-    container_name: ${qhostname}
+    hostname: ${qhostname:-qdrant}
+    container_name: ${qhostname:-qdrant}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     environment:
       - QDRANT__SERVICE__GRPC_PORT=6334
       - QDRANT__LOG_LEVEL=INFO
@@ -117,10 +117,10 @@ x-qdrant-base: &qdrant-base
 
 x-kafka-base: &kafka-base
     image: apache/kafka:latest
-    hostname: ${khostname}
-    container_name: ${khostname}
+    hostname: ${khostname:-kafka}
+    container_name: ${khostname:-kafka}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     ports:
       - ${kafka1:-9092}:${kafka1:-9092}
       - ${kafka2:-9093}:${kafka2:-9093}
@@ -141,10 +141,10 @@ x-kafka-base: &kafka-base
       - ./broker/data:/var/lib/kafka/data
 
 x-whisper-base: &whisper-base
-    hostname: ${whostname}
-    container_name: ${whostname}
+    hostname: ${whostname:-whisper}
+    container_name: ${whostname:-whisper}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     ports:
       - ${wport:-7860}:${wport:-7860}
     volumes:
@@ -152,10 +152,10 @@ x-whisper-base: &whisper-base
       - ./cache-whisper:/root/.cache
 
 x-crawl4ai-base: &crawl4ai-base
-    hostname: ${crawhostname}
-    container_name: ${crawhostname}
+    hostname: ${crawhostname:-crawl4ai}
+    container_name: ${crawhostname:-crawl4ai}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     ports:
       - ${CRAW1:-11235}:11235
       - ${CRAW2:-8000}:8000
@@ -192,12 +192,12 @@ x-nvidia-base: &nvidia-base
 
 x-proxy-base: &proxy-base
     image: 'jc21/nginx-proxy-manager:latest'
-    hostname: ${proxyhostname}
-    container_name: ${proxyhostname}
+    hostname: ${proxyhostname:-proxy}
+    container_name: ${proxyhostname:-proxy}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     environment:
-      - DISABLE_IPV6=${DISABLE_IPV6}
+      - DISABLE_IPV6=${DISABLE_IPV6:-false}
       - INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL}
       - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD}
     ports:
@@ -261,9 +261,9 @@ x-mongodb-base: &mongodb-base
 
 x-evolution-base: &evolution-base
     image: atendai/evolution-api:latest
-    hostname: ${evohostname}
-    container_name: ${evohostname}
-    restart: ${restart}
+    hostname: ${evohostname:-evolutionapi}
+    container_name: ${evohostname:-evolutionapi}
+    restart: ${restart:-always}
     pull_policy: ${pull_policy:-missing}
     environment:
       - SERVER_TYPE=http

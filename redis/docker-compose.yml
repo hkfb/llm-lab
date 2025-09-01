@@ -1,12 +1,12 @@
 services:
     redis:
       image: redis:latest
-      hostname: ${rhostname}
-      container_name: ${rhostname}
+      hostname: ${rhostname:-redis}
+      container_name: ${rhostname:-redis}
       pull_policy: ${pull_policy:-missing}
-      restart: ${restart}
+      restart: ${restart:-always}
       environment:
-        - REDIS_PORT=${REDIS_PORT}
+        - REDIS_PORT=${REDIS_PORT:-6379}
         - REDIS_DATABASES=16
       volumes:
         - ./redis:/data
