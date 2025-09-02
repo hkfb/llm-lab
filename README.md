@@ -1,11 +1,9 @@
 # llm-lab
 
-Made by: [Tecno Consultores 2023](https://www.tecnoconsultores.net/)
-
 To run N8N with recommendations on AMD64/ARM64 (Postgres, Redis):
 
 ```bash
-docker compose --env-file env.example up n8n -d
+docker compose up n8n -d
 ```
 
 Services that you can run:
@@ -26,3 +24,6 @@ Services that you can run:
 * [EvolutionAPI](https://doc.evolution-api.com/v1/en/get-started/introduction) on AMD64/ARM64
 * N8N-uv on AMD64
 
+## Attribution
+
+This project is a fork of [llm-lab](https://github.com/tecno-consultores/llm-lab), originally created by _Tecno Consultores_.
