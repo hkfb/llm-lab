@@ -6,8 +6,8 @@ services:
       pull_policy: ${pull_policy:-missing}
       restart: ${restart:-always}
       environment:
-        - POSTGRES_USER=${DB_USER:-user}
-        - POSTGRES_PASSWORD=${DB_PASSWORD:-KrFgLvKJRvinkEG5}
+        - POSTGRES_USER=${DB_USER:-dbuser}
+        - POSTGRES_PASSWORD=${DB_PASSWORD:-ZDBkODgwYz}
         - POSTGRES_DB=${DB_NAME:-n8n}
       volumes:
         - ./init:/docker-entrypoint-initdb.d:ro
