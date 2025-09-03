@@ -31,8 +31,8 @@ x-ollama-base: &ollama-base
 
 x-openwebui-base: &openwebui-base
     image: ghcr.io/open-webui/open-webui:main
-    hostname: ${openhostname}
-    container_name: ${openhostname}
+    hostname: ${openhostname:-openwebui}
+    container_name: ${openhostname:-openwebui}
     pull_policy: ${pull_policy:-missing}
     restart: ${restart}
     environment:
@@ -214,8 +214,8 @@ x-proxy-base: &proxy-base
 
 x-searxng-base: &searxng-base
     image: docker.io/searxng/searxng:latest
-    hostname: ${searxnghostname}
-    container_name: ${searxnghostname}
+    hostname: ${searxnghostname:-searxng}
+    container_name: ${searxnghostname:-searxng}
     pull_policy: ${pull_policy:-missing}
     restart: ${restart}
     ports:
@@ -240,10 +240,10 @@ x-searxng-base: &searxng-base
 
 x-mongodb-base: &mongodb-base
     image: mongo:latest
-    hostname: ${mhostname}
-    container_name: ${mhostname}
+    hostname: ${mhostname:-mongodb}
+    container_name: ${mhostname:-mongodb}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
 #    ports:
 #      - ${mongoport}:8081
     environment:
@@ -313,7 +313,7 @@ services:
       <<: *qdrant-base
       profiles: ["qdrant"]
 
-    openwebui-all:
+    openwebui:
       <<: *openwebui-base
       depends_on:
         redis:

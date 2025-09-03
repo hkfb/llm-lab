@@ -20,6 +20,7 @@ x-n8n-base: &n8n-base
     - N8N_BASIC_AUTH_ACTIVE=${BASIC_AUTH_ACTIVE:-false}
     - N8N_BASIC_AUTH_USER=${BASIC_AUTH_USER:-admin}
     - N8N_BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+    - WEBHOOK_URL=${N8N_WEBHOOK_URL:-http://localhost:${N8N_PORT:-5678}}
   ports:
     - ${N8N_PORT:-5678}:5678
   volumes:
