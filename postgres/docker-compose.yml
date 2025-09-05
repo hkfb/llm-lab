@@ -2,7 +2,6 @@ services:
     postgres:
       image: postgres:latest
       hostname: ${phostname:-postgres}
-      container_name: ${phostname:-postgres}
       pull_policy: ${pull_policy:-missing}
       restart: ${restart:-always}
       environment:

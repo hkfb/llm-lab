@@ -1,6 +1,5 @@
 x-n8n-base: &n8n-base
   hostname: ${nhostname:-n8n}
-  container_name: ${nhostname:-n8n}
   restart: ${restart:-unless-stopped}
   environment:
     - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE:-false}
