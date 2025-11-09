@@ -1,14 +1,9 @@
 # llm-lab
 
-To run N8N with recommendations on AMD64/ARM64 (Postgres, Redis):
-
-```bash
-docker compose up n8n -d
-```
-
 Services that you can run:
 
-* [N8N](https://github.com/n8n-io/n8n) on AMD64/ARM64
+* [Opencode](https://github.com/sst/opencode).
+* [N8N](https://github.com/n8n-io/n8n).
 * [Qdrant](https://github.com/qdrant/qdrant) on AMD64/ARM64
 * [OpenwebUI](https://github.com/open-webui/open-webui) on AMD64/ARM64
 * [Kafka](https://github.com/apache/kafka) on AMD64/ARM64
@@ -23,6 +18,20 @@ Services that you can run:
 * [MongoDB](https://www.mongodb.com) on AMD64
 * [EvolutionAPI](https://doc.evolution-api.com/v1/en/get-started/introduction) on AMD64/ARM64
 * N8N-uv on AMD64
+
+## Example usage
+
+Running Opencode server:
+
+```bash
+docker compose up opencode -d
+```
+
+Running N8N service:
+
+```bash
+docker compose up n8n -d
+```
 
 ## Attribution
 

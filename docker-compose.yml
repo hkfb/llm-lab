@@ -5,6 +5,7 @@ include:
   - postgres/docker-compose.yml
   - redis/docker-compose.yml
   - n8n/docker-compose.yml
+  - opencode/compose.yml
 
 x-ollama-base: &ollama-base
     image: ollama/ollama:latest

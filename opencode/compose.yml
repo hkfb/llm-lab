@@ -1,0 +1,10 @@
+services:
+  opencode:
+    build:
+      context: .
+    ports:
+      - 4096:4096
+    entrypoint: ["opencode"]
+    command: ["serve", "--hostname", "0.0.0.0", "--port", "4096"]
+    restart: unless-stopped
+
