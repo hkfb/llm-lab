@@ -4,7 +4,7 @@ Compose files for running LLM related service containers.
 
 Included services:
 
-* [Opencode](https://github.com/sst/opencode).
+* [Opencode](./opencode/README.md).
 * [N8N](https://github.com/n8n-io/n8n).
 * [Qdrant](https://github.com/qdrant/qdrant) on AMD64/ARM64
 * [OpenwebUI](https://github.com/open-webui/open-webui) on AMD64/ARM64
@@ -12,7 +12,7 @@ Included services:
 * [Ollama](https://github.com/ollama/ollama) on Nvidia
     + Ollama on AMD64/ARM64 or AMD GPU
 * [Whisper](https://github.com/openai/whisper) on Nvidia
-    + Whisper on CPU (--profile whisper)
+    + Whisper on CPU
 * [Crawl4ai](https://github.com/unclecode/crawl4ai) on AMD64
     + Crawl4ai on ARM64
 * [NGINX proxy manager](https://github.com/NginxProxyManager/nginx-proxy-manager) on AMD64/ARM64

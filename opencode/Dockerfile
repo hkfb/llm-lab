@@ -3,7 +3,7 @@
 
 FROM debian:stable-slim
 
-WORKDIR	/app
+RUN useradd -m opencode
 
 RUN apt update && \
 apt install curl -y && \
@@ -12,6 +12,10 @@ apt install nodejs -y && \
 apt install npm -y && \
 npm i -g opencode-ai && \
 apt clean && apt-get clean
+
+USER opencode
+
+WORKDIR	/home/opencode
 
 ENTRYPOINT opencode
 CMD ["--default-arg"]

@@ -1,0 +1,5 @@
+services:
+  opencode:
+    volumes:
+      - /home/user/opencode_workspace:/home/user/opencode_workspace:rw
+
