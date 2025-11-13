@@ -7,4 +7,8 @@ services:
     entrypoint: ["opencode"]
     command: ["serve", "--hostname", "0.0.0.0", "--port", "4096"]
     restart: unless-stopped
+    volumes:
+      - opencode_home:/home/opencode
 
+volumes:
+  opencode_home:
