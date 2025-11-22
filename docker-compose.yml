@@ -35,7 +35,7 @@ x-openwebui-base: &openwebui-base
     hostname: ${openhostname:-openwebui}
     container_name: ${openhostname:-openwebui}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     environment:
       - ENV=prod
       - CUSTOM_NAME=${CUSTOM_NAME}
@@ -165,7 +165,7 @@ x-crawl4ai-base: &crawl4ai-base
     volumes:
       - /dev/shm:/dev/shm
     environment:
-      - CRAWL4AI_API_TOKEN=${CRAWL4AI_API_TOKEN}
+      - CRAWL4AI_API_TOKEN=${CRAWL4AI_API_TOKEN:-}
       #- OPENAI_API_KEY=${OPENAI_API_KEY}
       #- CLAUDE_API_KEY=${CLAUDE_API_KEY}
     deploy:
@@ -199,8 +199,8 @@ x-proxy-base: &proxy-base
     restart: ${restart:-always}
     environment:
       - DISABLE_IPV6=${DISABLE_IPV6:-false}
-      - INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL}
-      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD}
+      - INITIAL_ADMIN_EMAIL=${INITIAL_ADMIN_EMAIL:-}
+      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD:-}
     ports:
       - 80:80
       - 443:443
@@ -218,7 +218,7 @@ x-searxng-base: &searxng-base
     hostname: ${searxnghostname:-searxng}
     container_name: ${searxnghostname:-searxng}
     pull_policy: ${pull_policy:-missing}
-    restart: ${restart}
+    restart: ${restart:-always}
     ports:
       - ${psearch:-8181}:8080
     volumes:
@@ -268,7 +268,7 @@ x-evolution-base: &evolution-base
     pull_policy: ${pull_policy:-missing}
     environment:
       - SERVER_TYPE=http
-      - SERVER_URL=${EVOLUTION_SERVER_URL}
+      - SERVER_URL=${EVOLUTION_SERVER_URL:-}
       - TELEMETRY=false
       - CORS_ORIGIN=*
       - DEL_INSTANCE=false
@@ -276,10 +276,10 @@ x-evolution-base: &evolution-base
       - WEBSOCKET_ENABLED=false
       - WEBSOCKET_GLOBAL_EVENTS=false
       - LANGUAGE=en
-      - AUTHENTICATION_API_KEY=${evoapikey}
+      - AUTHENTICATION_API_KEY=${evoapikey:-}
       - DATABASE_ENABLED=true
       - DATABASE_PROVIDER=postgresql
-      - DATABASE_CONNECTION_URI=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${evodb}?schema=public
+      - DATABASE_CONNECTION_URI=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${evodb:-}?schema=public
       - DATABASE_CONNECTION_CLIENT_NAME=evolution_exchange
       - DATABASE_SAVE_DATA_INSTANCE=true
       - DATABASE_SAVE_DATA_NEW_MESSAGE=true
@@ -289,7 +289,7 @@ x-evolution-base: &evolution-base
       - DATABASE_SAVE_DATA_LABELS=true
       - DATABASE_SAVE_DATA_HISTORIC=true
       - CACHE_REDIS_ENABLED=true
-      - CACHE_REDIS_URI=${eredis}
+      - CACHE_REDIS_URI=${eredis:-}
       - CACHE_REDIS_PREFIX_KEY=evolution
       - CACHE_REDIS_TTL=604800
       - CACHE_REDIS_SAVE_INSTANCES=false
@@ -329,16 +329,16 @@ services:
       <<: *ollama-base
       profiles: ["ollama-cpu"]
       environment:
-        - OLLAMA_DEBUG=${OLLAMA_DEBUG}
-        - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE}
-        - OLLAMA_MAX_LOADED_MODELS=${OLLAMA_MAX_LOADED_MODELS}
-        - OLLAMA_MAX_QUEUE=${OLLAMA_MAX_QUEUE}
-        - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL}
-        - OLLAMA_NOPRUNE=${OLLAMA_NOPRUNE}
-        - OLLAMA_SCHED_SPREAD=${OLLAMA_SCHED_SPREAD}
-        - OLLAMA_FLASH_ATTENTION=${OLLAMA_FLASH_ATTENTION}
-        - OLLAMA_KV_CACHE_TYPE=${OLLAMA_KV_CACHE_TYPE}
-        - OLLAMA_LOAD_TIMEOUT=${OLLAMA_LOAD_TIMEOUT}
+        - OLLAMA_DEBUG=${OLLAMA_DEBUG:-}
+        - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-}
+        - OLLAMA_MAX_LOADED_MODELS=${OLLAMA_MAX_LOADED_MODELS:-}
+        - OLLAMA_MAX_QUEUE=${OLLAMA_MAX_QUEUE:-}
+        - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL:-}
+        - OLLAMA_NOPRUNE=${OLLAMA_NOPRUNE:-}
+        - OLLAMA_SCHED_SPREAD=${OLLAMA_SCHED_SPREAD:-}
+        - OLLAMA_FLASH_ATTENTION=${OLLAMA_FLASH_ATTENTION:-}
+        - OLLAMA_KV_CACHE_TYPE=${OLLAMA_KV_CACHE_TYPE:-}
+        - OLLAMA_LOAD_TIMEOUT=${OLLAMA_LOAD_TIMEOUT:-}
 
     ollama-nvidia:
       <<: [*ollama-base, *nvidia-base]
@@ -346,16 +346,16 @@ services:
       environment:
         - NVIDIA_VISIBLE_DEVICES=all
         - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
-        - OLLAMA_DEBUG=${OLLAMA_DEBUG}
-        - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE}
-        - OLLAMA_MAX_LOADED_MODELS=${OLLAMA_MAX_LOADED_MODELS}
-        - OLLAMA_MAX_QUEUE=${OLLAMA_MAX_QUEUE}
-        - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL}
-        - OLLAMA_NOPRUNE=${OLLAMA_NOPRUNE}
-        - OLLAMA_SCHED_SPREAD=${OLLAMA_SCHED_SPREAD}
-        - OLLAMA_FLASH_ATTENTION=${OLLAMA_FLASH_ATTENTION}
-        - OLLAMA_KV_CACHE_TYPE=${OLLAMA_KV_CACHE_TYPE}
-        - OLLAMA_LOAD_TIMEOUT=${OLLAMA_LOAD_TIMEOUT}
+        - OLLAMA_DEBUG=${OLLAMA_DEBUG:-}
+        - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-}
+        - OLLAMA_MAX_LOADED_MODELS=${OLLAMA_MAX_LOADED_MODELS:-}
+        - OLLAMA_MAX_QUEUE=${OLLAMA_MAX_QUEUE:-}
+        - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL:-}
+        - OLLAMA_NOPRUNE=${OLLAMA_NOPRUNE:-}
+        - OLLAMA_SCHED_SPREAD=${OLLAMA_SCHED_SPREAD:-}
+        - OLLAMA_FLASH_ATTENTION=${OLLAMA_FLASH_ATTENTION:-}
+        - OLLAMA_KV_CACHE_TYPE=${OLLAMA_KV_CACHE_TYPE:-}
+        - OLLAMA_LOAD_TIMEOUT=${OLLAMA_LOAD_TIMEOUT:-}
 
     whisper-nvidia:
       <<: [*whisper-base, *nvidia-base]
@@ -363,8 +363,8 @@ services:
       profiles: ["whisper-gpu"]
       environment:
         - ASR_DEVICE=cuda
-        - ASR_MODEL=${ASR_MODEL}
-        - ASR_ENGINE=${ASR_ENGINE}
+        - ASR_MODEL=${ASR_MODEL:-}
+        - ASR_ENGINE=${ASR_ENGINE:-}
         - MODEL_IDLE_TIMEOUT=300
 
     whisper-cpu:
@@ -373,8 +373,8 @@ services:
       profiles: ["whisper"]
       environment:
         - ASR_DEVICE=cpu
-        - ASR_MODEL=${ASR_MODEL}
-        - ASR_ENGINE=${ASR_ENGINE}
+        - ASR_MODEL=${ASR_MODEL:-}
+        - ASR_ENGINE=${ASR_ENGINE:-}
         - MODEL_IDLE_TIMEOUT=300
 
     crawl4ai-amd64:
