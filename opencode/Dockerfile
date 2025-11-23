@@ -11,6 +11,7 @@ apt install unzip -y && \
 apt install nodejs -y && \
 apt install npm -y && \
 apt install git -y && \
+apt install neovim -y && \
 npm i -g opencode-ai@1 && \
 apt clean && apt-get clean
 
