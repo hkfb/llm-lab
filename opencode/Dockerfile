@@ -3,22 +3,17 @@
 
 FROM debian:13-slim
 
-RUN useradd -m opencode
+RUN useradd --create-home opencode
 
 # Install OpenCode tools & dependencies
 RUN apt update && \
-apt install curl -y && \
-apt install unzip -y && \
-apt install nodejs -y && \
-apt install npm -y && \
-apt install git -y && \
-apt install neovim -y
+apt install --yes curl unzip nodejs npm git neovim ripgrep
 
 # Install OpenCode AI
-RUN npm i -g opencode-ai@1
+RUN npm i --global opencode-ai@1
 
 # Install Playwright and its dependencies
-RUN npm i -g playwright@1 && \
+RUN npm i --global playwright@1 && \
 npx playwright install-deps && \
 npx playwright install chromium
 

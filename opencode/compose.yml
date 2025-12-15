@@ -2,6 +2,7 @@ services:
   opencode:
     build:
       context: .
+    user: opencode
     ports:
       - 4096:4096
     entrypoint: ["opencode"]
