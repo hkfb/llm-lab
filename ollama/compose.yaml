@@ -1,0 +1,48 @@
+services:
+    ollama:
+      image: docker.io/ollama/ollama:rocm
+      environment:
+        - OLLAMA_DEBUG=${OLLAMA_DEBUG:-}
+        - OLLAMA_KEEP_ALIVE=${OLLAMA_KEEP_ALIVE:-}
+        - OLLAMA_MAX_LOADED_MODELS=${OLLAMA_MAX_LOADED_MODELS:-}
+        - OLLAMA_MAX_QUEUE=${OLLAMA_MAX_QUEUE:-}
+        - OLLAMA_NUM_PARALLEL=${OLLAMA_NUM_PARALLEL:-}
+        - OLLAMA_NOPRUNE=${OLLAMA_NOPRUNE:-}
+        - OLLAMA_SCHED_SPREAD=${OLLAMA_SCHED_SPREAD:-}
+        - OLLAMA_FLASH_ATTENTION=${OLLAMA_FLASH_ATTENTION:-}
+        - OLLAMA_KV_CACHE_TYPE=${OLLAMA_KV_CACHE_TYPE:-}
+        - OLLAMA_LOAD_TIMEOUT=${OLLAMA_LOAD_TIMEOUT:-}
+        - HSA_OVERRIDE_GFX_VERSION=9.0.0       # Vega 64
+        - HCC_AMDGPU_TARGET=gfx900
+
+      #hostname: ${ohostname:-ollama}
+      #container_name: ${ohostname:-ollama}
+      privileged: true
+      pull_policy: ${pull_policy:-missing}
+      restart: ${restart:-unless-stopped}
+      tty: true
+      ports:
+        - ${OPORT:-11434}:11434
+      ulimits:
+        memlock: -1
+      volumes:
+        - ollama_data:${OLLAMA_DATA_DIR:-/var/lib/ollama}
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      healthcheck:
+        test: ['CMD-SHELL', 'ollama --version && ollama ps || exit 1']
+        start_period: 5s
+        interval: 5s
+        timeout: 5s
+        retries: 10
+      devices:
+        - /dev/kfd
+        - /dev/dri
+      group_add:
+        - video
+      security_opt:
+        - seccomp=unconfined
+
+volumes:
+  ollama_data:
+
