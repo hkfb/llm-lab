@@ -1,7 +1,7 @@
 # Made by: Tecno Consultores 2023
 
 include:
-  - docker-compose.common.yml
+  - compose.common.yaml
   - postgres/docker-compose.yml
   - redis/docker-compose.yml
   - n8n/docker-compose.yml
@@ -155,8 +155,8 @@ x-mongodb-base: &mongodb-base
 #    ports:
 #      - ${mongoport}:8081
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-}
     volumes:
       - ./mongodb_data:/data/db
       - /etc/timezone:/etc/timezone:ro

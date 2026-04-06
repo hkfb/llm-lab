@@ -1,15 +1,14 @@
 services:
     openwebui:
+      image: ghcr.io/open-webui/open-webui:main
+      pull_policy: ${pull_policy:-missing}
+      restart: ${restart:-always}
+
       depends_on:
         redis:
           condition: service_healthy
           restart: true
 
-      image: ghcr.io/open-webui/open-webui:main
-      #hostname: ${openhostname:-openwebui}
-      #container_name: ${openhostname:-openwebui}
-      pull_policy: ${pull_policy:-missing}
-      restart: ${restart:-always}
       environment:
         - ENV=prod
         - CUSTOM_NAME=${CUSTOM_NAME:-llm_lab}
@@ -27,7 +26,7 @@ services:
         - ENABLE_OLLAMA_API=true
         - OLLAMA_BASE_URL=${UOLLAMA:-http://ollama:11434}
         - ENABLE_OPENAI_API=${ENABLE_OPENAI_API:-false}
-        - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-"https://api.openai.com/v1"}
+        - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
         - ENABLE_AUTOCOMPLETE_GENERATION=true
         - AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH=-1
         - ENABLE_EVALUATION_ARENA_MODELS=false
@@ -55,17 +54,21 @@ services:
         - IMAGE_STEPS=50
         - ENABLE_WEBSOCKET_SUPPORT=true
         - WEBSOCKET_MANAGER=redis
-        - WEBSOCKET_REDIS_URL=${UREDIS:-"redis://redis-ai:6379/1"}
-        - REDIS_URL=${UREDIS:-"redis://redis-ai:6379/1"}
+        - WEBSOCKET_REDIS_URL=${UREDIS:-redis://redis:6379/1}
+        - REDIS_URL=${UREDIS:-redis://redis:6379/1}
         - ENABLE_SEARCH_QUERY_GENERATION=true
+
       ports:
         - ${PORT:-8383}:8080
+
       extra_hosts:
         - host.docker.internal:host-gateway
+
       volumes:
         - openwebui_data:/app/backend/data
         - /etc/timezone:/etc/timezone:ro
         - /etc/localtime:/etc/localtime:ro
+
       deploy:
         mode: global
         restart_policy:

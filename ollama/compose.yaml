@@ -32,7 +32,7 @@ services:
       healthcheck:
         test: ['CMD-SHELL', 'ollama --version && ollama ps || exit 1']
         start_period: 5s
-        interval: 5s
+        interval: 10s
         timeout: 5s
         retries: 10
       devices:
