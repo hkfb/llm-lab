@@ -3,7 +3,7 @@
 include:
   - compose.common.yaml
   - postgres/docker-compose.yml
-  - redis/docker-compose.yml
+  - redis/compose.yaml
   - n8n/docker-compose.yml
   - opencode/compose.yml
   - open-webui/compose.yaml
