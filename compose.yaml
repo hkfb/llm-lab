@@ -5,7 +5,7 @@ include:
   - postgres/docker-compose.yml
   - redis/compose.yaml
   - n8n/docker-compose.yml
-  - opencode/compose.yml
+  - opencode/compose.yaml
   - open-webui/compose.yaml
   - ollama/compose.yaml
 
